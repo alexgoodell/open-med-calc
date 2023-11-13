@@ -95,12 +95,12 @@ class CalcResponse(BaseModel):
     additional_info: Optional[str] = var_description['additional_info']
 
 
-@app.get("/api/calc/")
+@app.get("/", summary="Welcome")
 def welcome():
     return {"message": 'Welcome to the open-med-calc API. Please see the documentation at /docs for more information'}
 
 
-@app.post("/api/calc/meld", description=Path('docs/meld.md').read_text(), summary="Calculate Original MELD Score", response_model=CalcResponse)
+@app.post("/meld", description=Path('docs/meld.md').read_text(), summary="Calculate Original MELD Score", response_model=CalcResponse)
 def calculate_meld(calcRequestMeld: CalcRequestMeld):
     additional_info = ('See openmedcalc.org/meld for references. Note this version has been suppplanted by the MELD-Na '
                        'score and the MELD 3.0 score.')
