@@ -10,5 +10,9 @@ services:
       - 7777:80
     restart: unless-stopped
 volumes:
-  app: {}
+  app:
+    external: true
 
+
+
+# sudo docker run -d -p 7777:80 -v omc_app:/app --name omc-container omc-image
