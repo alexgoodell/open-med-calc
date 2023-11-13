@@ -19,7 +19,7 @@ It can be integrated into other applications such as OpenAI's new GPTs functiona
 
 ```bash
 cd open-med-calc
-uvicorn app.main:app --reload
+uvicorn main:app --reload
 ```
 
 ## Current forumlas

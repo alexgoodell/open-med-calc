@@ -38,48 +38,48 @@ app = FastAPI(
 var_description = dict()
 
 var_description['success'] = Field(
-        default=False,
-        title='Success',
-        description='Describes whether the calculation was successful or not. If not, the score will be null and the message will describe the error.'
-    )
+    default=False,
+    title='Success',
+    description='Describes whether the calculation was successful or not.'
+)
 var_description['message'] = Field(
-        default=False,
-        title='Result message',
-        description='Summarizes the results of the caluclation'
-    )
+    default="message",
+    title='Result message',
+    description='Summarizes the results of the caluclation'
+)
 var_description['additional_info'] = Field(
-        default=False,
-        title='Result information',
-        description='Summarizes important information about the calculation'
-    )
+    default="info",
+    title='Result information',
+    description='Summarizes important information about the calculation'
+)
 
 var_description['inr'] = Field(
-        title='International Normalized Ratio',
-        description='This is the patient\'s INR value and should be between 0 and 10',
-        gt=0,
-        lt=10,
-    )
+    default=1.0,
+    title='International Normalized Ratio',
+    description='This is the patient\'s INR value and should be between 0 and 10',
+    gt=0,
+    lt=10
+)
 var_description['is_on_dialysis'] = Field(
-        title='Is the patient on dialysis?',
-        description='Dialysis at least twice in the past week'
-    )
+    default=False,
+    title='Is the patient on dialysis?',
+    description='Dialysis at least twice in the past week'
+)
 var_description['bilirubin'] = Field(
-        title='Serum bilirubin',
-        description='This is the patient\'s total bilirubin value in mg/dL and should be between 0 and 10',
-        gt=0,
-        lt=10,
-    )
+    default=1.0,
+    title='Serum bilirubin',
+    description='This is the patient\'s total bilirubin value in mg/dL and should be between 0 and 10',
+    gt=0,
+    lt=10
+)
 var_description['creatinine'] = Field(
-        title='Serum creatinine',
-        description='This is the patient\'s serum creatinine in mg/dL and should be between 0 and 10',
-        gt=0,
-        lt=10,
-    )
+    default=1.0,
+    title='Serum creatinine',
+    description='This is the patient\'s serum creatinine in mg/dL and should be between 0 and 10',
+    gt=0,
+    lt=10
+)
 
-
-@app.get("/api/calc/")
-def welcome():
-    return {"message": "Welcome to the open-med-calc API. Please see the documentation at http://api.openmedcalc.org/docs for more information" }
 
 class CalcRequestMeld(BaseModel):
     is_on_dialysis: bool = var_description['is_on_dialysis']
@@ -87,26 +87,30 @@ class CalcRequestMeld(BaseModel):
     bilirubin: float = var_description['bilirubin']
     inr: float = var_description['inr']
 
+
 class CalcResponse(BaseModel):
     success: bool = var_description['success']
     score: Optional[int]
     message: Optional[str] = var_description['message']
     additional_info: Optional[str] = var_description['additional_info']
 
-@app.post("api/calc/meld", description=Path('docs/meld.md').read_text(), summary="Calculate MELD")
-def calculate_meld(calcRequestMeld: CalcRequestMeld):
-    '''
-    # Original MELD Score Calculator
-    calculate the traditional MELD score for an individual. This is the original, pre-2016, model for end-stage liver disease. Note this version has been suppplanted by the MELD-Na score and the MELD 3.0 score.
-    '''
-    additional_info = 'See openmedcalc.org/meld for references. Note this version has been suppplanted by the MELD-Na score and the MELD 3.0 score.'
 
+@app.get("/api/calc/")
+def welcome():
+    return {"message": 'Welcome to the open-med-calc API. Please see the documentation at /docs for more information'}
+
+
+@app.post("/api/calc/meld", description=Path('docs/meld.md').read_text(), summary="Calculate Original MELD Score", response_model=CalcResponse)
+def calculate_meld(calcRequestMeld: CalcRequestMeld):
+    additional_info = ('See openmedcalc.org/meld for references. Note this version has been suppplanted by the MELD-Na '
+                       'score and the MELD 3.0 score.')
     # (0.957 * ln(Serum Cr) + 0.378 * ln(Serum Bilirubin) + 1.120 * ln(INR) + 0.643 ) * 10
     if calcRequestMeld.is_on_dialysis:
         calcRequestMeld.creatinine = 4.0
-    meld_score = (0.957 * np.log(calcRequestMeld.creatinine) + 0.378 * np.log(calcRequestMeld.bilirubin) + 1.120 * np.log(calcRequestMeld.inr) + 0.643 ) * 10
+    meld_score = (0.957 * np.log(calcRequestMeld.creatinine) + 0.378 * np.log(
+        calcRequestMeld.bilirubin) + 1.120 * np.log(calcRequestMeld.inr) + 0.643) * 10
 
-    meld_score =int(np.round(meld_score, 0))
+    meld_score = int(np.round(meld_score, 0))
     # Estimated 3-Month Mortality By MELD Score
     # ≤9 1.9%
     # 10–19 6.0%
@@ -126,8 +130,8 @@ def calculate_meld(calcRequestMeld: CalcRequestMeld):
     else:
         three_month_mortality = 71.3
 
-    message = "The patient's MELD score is " + str(meld_score) + ". The estimated 3-month mortality is " + str(three_month_mortality) + "%."
+    message = "The patient's MELD score is " + str(meld_score) + ". The estimated 3-month mortality is " + str(
+        three_month_mortality) + "%."
 
     response = CalcResponse(success=True, score=meld_score, message=message, additional_info=additional_info)
     return response
-
