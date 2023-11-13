@@ -3,7 +3,6 @@ services:
   omc:
     image: tiangolo/uvicorn-gunicorn-fastapi:python3.11
     container_name: omc-container
-    command: uvicorn main:app --host 0.0.0.0
     # environment:
     volumes:
       - app:/app
