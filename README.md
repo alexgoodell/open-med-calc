@@ -1,9 +1,13 @@
 
 ![logo.svg](static%2Fimgs%2Flogo.svg)
 
+![GitHub issues](https://img.shields.io/github/issues/alexgoodell/open-med-calc)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/alexgoodell/open-med-calc)
+![GitHub last commit](https://img.shields.io/github/last-commit/alexgoodell/open-med-calc)
+
 ## About
 
-This is a simple web app that allows you to calculate common medical formulas. 
+This is a simple open-source API which allows users to calculate common medical formulas. 
 It is built using [FastAPI](https://fastapi.tiangolo.com/) and follows the OpenAPI specification.
 It can be integrated into other applications such as OpenAI's new GPTs functionality.
 
