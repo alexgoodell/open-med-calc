@@ -1,3 +1,54 @@
+
+
+  def get_meldna_score(self):
+        
+        
+        
+
+Age 
+Sex
+Type of surgery
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Varicose veins
+Current swollen legs
+Current central venous access
+History of DVT/PE
+Family history of thrombosis
+Positive Factor V Leiden
+Positive prothrombin 20210A
+Elevated serum homocysteine
+Positive lupus anticoagulant
+Elevated anticardiolipin antibody
+Heparin-induced thrombocytopenia
+Other congenital or acquired thrombophilia
+Mobility
+History of inflammatory bowel disease
+BMI >25
+Acute MI
+COPD
+Present or previous malignancy
+Other risk factors
+
+
+
+
+
+
 age_cat = [{ "text" : "≤40", "score": 0},
 { "text" : "41-60", "score": 1},
 { "text" : "61-74", "score": 2},
@@ -45,3 +96,126 @@ surgery_cat = [{ "text" : "No surgery", "score": 0},
 { "text" : "Minor surgery", "score": 1},
 { "text" : "Major >45 min, laparoscopic >45 min, or arthroscopicy", "score": 2},
 { "text" : "Elective major lower extremity arthroplasty", "score": 3}]
+
+
+
+
+class Tags(Enum):
+    items = "items"
+    users = "users"
+
+from enum import Enum
+
+from fastapi import FastAPI
+
+
+class ModelName(str, Enum):
+    alexnet = "alexnet"
+    resnet = "resnet"
+    lenet = "lenet"
+
+
+app = FastAPI()
+
+
+@app.get("/models/{model_name}")
+async def get_model(model_name: ModelName):
+    if model_name is ModelName.alexnet:
+        return {"model_name": model_name, "message": "Deep Learning FTW!"}
+
+    if model_name.value == "lenet":
+        return {"model_name": model_name, "message": "LeCNN all the images"}
+
+    return {"model_name": model_name, "message": "Have some residuals"}
+                                                                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                              
+-                                
+-                   
+- 
+-                                  
+-                                                                           
+-                                 
+-                                           
+-                
+-                                                                    
+- 
+
+
+
+
+
+
+- Does the patient have active cancer (treatment or palliation within 6 months)?
+- Has the patient been bedridden recently (greater than 3 days) or had major surgery within 12 weeks?
+- Does the patient have calf swelling greater than 3 cm compared to the other leg? (measured 10 cm below tibial tuberosity)
+- Does the patient have collateral (nonvaricose) superficial veins?
+- Does that patient have an entire leg which is swollen?
+- Does the patient have localized tenderness along a deep venous system?
+- Does the patient have pitting edema, confined to symptomatic leg?
+- Does the patient have paralysis, paresis, or recent plaster immobilization of the lower extremity?
+- Does the patient have previously-documented DVT?
+- Does the patient have alternative diagnosis to DVT as likely or more likely?
+
+- active cancer 1
+- bedridden recentl 1
+- calf swelling 1
+- collateral veins 1
+- entire leg swollen 1
+- localized tenderness 1
+- pitting edema 1
+- paralysis_paresis_or_plaster 1
+- previous_dvt 1
+- alternative_diagnosis_as_likely -2
+
+Yes+1
+
+
+
+No0
+
+Yes+1
+
+
+No0
+
+Yes+1
+
+
+No0
+
+Yes+1
+
+
+No0
+
+Yes+1
+
+
+No0
+
+Yes+1
+
+
+No0
+
+Yes+1
+
+
+No0
+
+Yes+1

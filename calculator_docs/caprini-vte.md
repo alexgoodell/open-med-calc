@@ -1,0 +1,1 @@
+The Caprini Risk Assessment Model is a tool used to assess an individual's risk of Venous Thromboembolism (VTE). See https://openmedcalc.org/caprini-vte for more information. 

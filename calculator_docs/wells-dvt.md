@@ -1,0 +1,1 @@
+Wells' Criteria for deep vein thrombosis (DVT) is a tool to estimate the probability of the presence of DVT. For more information, see https://openmedcalc.org/wells-dvt
