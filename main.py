@@ -22,17 +22,26 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
+
 @app.get("/", response_class=HTMLResponse)
 async def read_main(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
 
 @app.get("/about", response_class=HTMLResponse)
 async def read_main(request: Request):
     return templates.TemplateResponse("about.html", {"request": request})
 
+
 @app.get("/contact", response_class=HTMLResponse)
 async def read_main(request: Request):
     return templates.TemplateResponse("contact.html", {"request": request})
+
+
+@app.api_route("/{path_name:path}", methods=["GET"], response_class=HTMLResponse)
+async def catch_all(request: Request, path_name: str):
+    return templates.TemplateResponse("index.html", {"request": request})
+
 
 # ============== API ==============
 
@@ -53,11 +62,9 @@ api = FastAPI(
 
 app.mount("/api", api)
 
+
 def calc_docs(calculator_name: str):
     return Path(f'calculator_docs/{calculator_name}.md').read_text()
-
-
-
 
 
 # ================= API Routes ==================
