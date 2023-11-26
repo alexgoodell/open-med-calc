@@ -11,4 +11,5 @@ sleep 10;
 alembic upgrade head
 "
 
+git pull
 pip install -r requirements.txt
