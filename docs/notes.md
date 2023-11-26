@@ -148,16 +148,7 @@ async def get_model(model_name: ModelName):
 -                   
 - 
 -                                  
--                               class SurgeryType(Enum):
-    none = "not scheduled for surgery"
-    minor = "minor surgery"
-    major = "major surgery"
-    major_lower_extremity = "major lower extremity surgery"
-
-class Mobility(Enum):
-    ambulatory = "normal/ambulatory"
-    bedrest = "bedrest or only walking in room"
-    confined = "confined to bed >72 hours"                                            
+-                                                                           
 -                                 
 -                                           
 -                

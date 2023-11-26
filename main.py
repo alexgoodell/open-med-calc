@@ -38,11 +38,6 @@ async def read_main(request: Request):
     return templates.TemplateResponse("contact.html", {"request": request})
 
 
-@app.api_route("/{path_name:path}", methods=["GET"], response_class=HTMLResponse)
-async def catch_all(request: Request, path_name: str):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-
 # ============== API ==============
 
 api = FastAPI(
@@ -61,6 +56,11 @@ api = FastAPI(
 )
 
 app.mount("/api", api)
+
+#404
+@app.api_route("/{path_name:path}", methods=["GET"], response_class=HTMLResponse)
+async def catch_all(request: Request, path_name: str):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 def calc_docs(calculator_name: str):
