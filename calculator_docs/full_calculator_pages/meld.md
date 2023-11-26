@@ -1,0 +1,3 @@
+MELD
+
+Calculate the traditional MELD score for an individual. This is the original, pre-2016, model for end-stage liver disease. Note this version has been suppplanted by the MELD-Na score and the meld 3.0 score. See openmedcalc.org/meld for references. 

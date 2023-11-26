@@ -15,6 +15,16 @@ from model_classes import *
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+import markdown
+
+# ============== Functions ==============
+
+def calc_docs(calculator_name: str):
+    return Path(f'calculator_docs/short_calculator_info/{calculator_name}.md').read_text()
+
+def full_calculator_pages(calculator_name: str):
+    md_text = Path(f'calculator_docs/full_calculator_pages/{calculator_name}.md').read_text()
+    return md_text
 
 # ============== Content server ==============
 
@@ -29,42 +39,46 @@ async def read_main(request: Request):
 
 
 @app.get("/about", response_class=HTMLResponse)
-async def read_main(request: Request):
+async def read_about(request: Request):
     return templates.TemplateResponse("about.html", {"request": request})
 
 
 @app.get("/contact", response_class=HTMLResponse)
-async def read_main(request: Request):
+async def read_contact(request: Request):
     return templates.TemplateResponse("contact.html", {"request": request})
+
+
+@app.get("/meld", response_class=HTMLResponse)
+async def read_meld(request: Request):
+    return templates.TemplateResponse("blank.html", {"request": request, "content": full_calculator_pages('meld')})
 
 
 # ============== API ==============
 
 api = FastAPI(
-    swagger_ui_parameters={"url": "https://api.openmedcalc.org/openapi.json"},
-    root_path="/api",
+    swagger_ui_parameters={"url": "https://api.openmedcalc.org/openapi.json",
+                           "openapi_url": "https://api.openmedcalc.org/openapi.json"},
     title="OpenMedCalc API",
     description="OpenMedCalc API helps you calculate medical scores and indices.",
     summary="The open source medical calculator",
-    terms_of_service="http://openmedcalc.org/terms/",
+    terms_of_service="http://openmedcalc.org/terms",
     contact={
         "name": "OpenMedCalc",
-        "url": "http://openmedcalc.org/contact/",
+        "url": "http://openmedcalc.org/contact",
         "email": "info@openmedcalc.org",
     },
-    servers=[{'url': 'https://api.openmedcalc.org', 'description': 'primary SSL endpoint'}]
+    servers=[{'url': 'https://api.openmedcalc.org', 'description': 'primary SSL endpoint'}],
+    root_path="/api",
+    root_path_in_servers=False
 )
 
 app.mount("/api", api)
 
-#404
+
+# 404
 @app.api_route("/{path_name:path}", methods=["GET"], response_class=HTMLResponse)
 async def catch_all(request: Request, path_name: str):
     return templates.TemplateResponse("index.html", {"request": request})
-
-
-def calc_docs(calculator_name: str):
-    return Path(f'calculator_docs/{calculator_name}.md').read_text()
 
 
 # ================= API Routes ==================

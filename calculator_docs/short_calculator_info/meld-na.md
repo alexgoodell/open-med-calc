@@ -1,0 +1,1 @@
+Calculate the MELD-Na (also known as MELD-Sodium) score for an individual. This is the modified model for end-stage liver disease. See https://openmedcalc.org/meld-na for references. 
