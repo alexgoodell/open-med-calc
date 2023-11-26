@@ -37,7 +37,7 @@ async def read_main(request: Request):
 # ============== API ==============
 
 api = FastAPI(
-    swagger_ui_parameters={"openapi_url": "https://api.openmedcalc.org/openapi.json"},
+    swagger_ui_parameters={"url": "https://api.openmedcalc.org/openapi.json"},
     title="OpenMedCalc API",
     description="OpenMedCalc API helps you calculate medical scores and indices.",
     summary="The open source medical calculator",
