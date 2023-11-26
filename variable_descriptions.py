@@ -75,7 +75,8 @@ var_description['type_of_surgery'] = Field(
     description="Minor surgery does not refer to type of surgery but rather length of anesthesia <45 minutes. Major "
                 "surgery refers to procedures with general or regional anesthesia time exceeding 45 minutes. Major"
                 "lower extremity surgery refers to procedures anesthesia time exceeding 45 minutes and involving "
-                "the hip, knee, thigh, or ankle."
+                "the hip, knee, thigh, or ankle. The only accepted inputs are: 'not scheduled for surgery', 'minor "
+                "surgery', 'major surgery', or 'major lower extremity surgery'."
 )
 var_description['recent_major_surgery'] = Field(
     default=False,
@@ -214,8 +215,8 @@ var_description['other_congenital_or_acquired_thrombophilia'] = Field(
 var_description['mobility'] = Field(
     default='normal/ambulatory',
     title="Mobility",
-    description="There are three categories of mobility: normal/ambulatory, bedrest/only walking in room;"
-                " or confined to bed >72 hours."
+    description="There are three categories of mobility: 'normal/ambulatory', 'bedrest or only walking in room',"
+                " or 'confined to bed >72 hours'."
 )
 var_description['history_of_inflammatory_bowel_disease'] = Field(
     default=False,

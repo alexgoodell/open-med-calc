@@ -22,6 +22,24 @@ cd open-med-calc
 uvicorn main:app --reload
 ```
 
+## To run the app remotely
+
+1. Install docker and docker-compose on remote server
+2. Transfer docker-compose.yml to remote server
+3. make the volume is created prior to running the docker container
+```bash
+docker volume create app
+mkdir -r /var/lib/docker/volumes/app/_data
+```
+4. run `docker-compose up -d` in the same directory as docker-compose.yml
+5. Run the app
+
+```bash
+cd open-med-calc
+uvicorn main:app --reload
+```
+
+
 ## Current forumlas
 
 - MELD

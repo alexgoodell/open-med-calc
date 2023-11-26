@@ -1,10 +1,10 @@
 # Project:     open-med-calc
-# File:        app/main.py
+# File:        api/main.py
 # Created by:  Alex Goodell
 
 # ============== Imports ==============
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 
 from pathlib import Path
 from typing import Optional
@@ -12,10 +12,31 @@ from pydantic import BaseModel, Field
 import numpy as np
 from variable_descriptions import var_description
 from model_classes import *
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
-# ============== Description ==============
+# ============== Content server ==============
 
-app = FastAPI(
+app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/", response_class=HTMLResponse)
+def read_main(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/about", response_class=HTMLResponse)
+def read_main(request: Request):
+    return templates.TemplateResponse("about.html", {"request": request})
+
+@app.get("/contact", response_class=HTMLResponse)
+def read_main(request: Request):
+    return templates.TemplateResponse("contact.html", {"request": request})
+
+# ============== API ==============
+
+api = FastAPI(
     title="OpenMedCalc API",
     description="OpenMedCalc API helps you calculate medical scores and indices.",
     summary="The open source medical calculator",
@@ -25,25 +46,29 @@ app = FastAPI(
         "url": "http://openmedcalc.org/contact/",
         "email": "info@openmedcalc.org",
     },
-    servers=[{'url':'https://api.openmedcalc.org', 'description': 'primary SSL endpoint'}]
+    servers=[{'url': 'https://api.openmedcalc.org', 'description': 'primary SSL endpoint'}]
 )
 
+app.mount("/api", api)
 
 def calc_docs(calculator_name: str):
     return Path(f'calculator_docs/{calculator_name}.md').read_text()
 
 
-# ================= Routes ==================
+
+
+
+# ================= API Routes ==================
 
 # ----------------- Welcome -----------------
-@app.get("/", summary="Welcome")
+@api.get("/", summary="Welcome")
 async def welcome():
     return {"message": 'Welcome to the open-med-calc API. Please see the documentation at /docs for more information'}
 
 
 # ------------- Original MELD -----------------
 
-@app.post("/meld", summary="Calculate Original MELD Score", response_model=CalcResponse, description=calc_docs('meld'))
+@api.post("/meld", summary="Calculate Original MELD Score", response_model=CalcResponse, description=calc_docs('meld'))
 async def calculate_meld(calc: CalcRequestMeld):
     additional_info = calc_docs('meld')
     # (0.957 * ln(Serum Cr) + 0.378 * ln(Serum Bilirubin) + 1.120 * ln(INR) + 0.643 ) * 10
@@ -78,7 +103,7 @@ async def calculate_meld(calc: CalcRequestMeld):
 
 # -------------- MELD-Na -----------------
 
-@app.post("/meld-na", summary="Calculate MELD-Na Score", response_model=CalcResponse, description=calc_docs('meld-na'))
+@api.post("/meld-na", summary="Calculate MELD-Na Score", response_model=CalcResponse, description=calc_docs('meld-na'))
 async def calculate_meld_na(calc: CalcRequestMeldNa):
     additional_info = calc_docs('meld-na')
 
@@ -145,7 +170,7 @@ async def calculate_meld_na(calc: CalcRequestMeldNa):
 
 # -------------- Caprini VTE -----------------
 
-@app.post("/caprini-vte", summary="Calculate the Caprini Score for Venous Thromboembolism", response_model=CalcResponse,
+@api.post("/caprini-vte", summary="Calculate the Caprini Score for Venous Thromboembolism", response_model=CalcResponse,
           description=calc_docs('caprini-vte'))
 async def calculate_caprini(calc: CalcRequestCapriniVte):
     additional_info = calc_docs('caprini-vte')
@@ -283,9 +308,9 @@ async def calculate_caprini(calc: CalcRequestCapriniVte):
 
 # -------------- Wells DVT -----------------
 
-@app.post("/wells-dvt", summary="Calculate Wells Criteria for DVT", response_model=CalcResponse,
+@api.post("/wells-dvt", summary="Calculate Wells Criteria for DVT", response_model=CalcResponse,
           description=calc_docs('wells-dvt'))
-async def calculate_meld_na(calc: CalcRequestWellsDvt):
+async def calculate_wells_dvt(calc: CalcRequestWellsDvt):
     additional_info = calc_docs('wells-dvt')
 
     wells_dvt_score = 0

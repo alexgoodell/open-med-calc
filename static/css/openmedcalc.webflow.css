@@ -1,0 +1,348 @@
+:root {
+  --smaller-container-width: 600px;
+}
+
+.w-layout-blockcontainer {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+@media screen and (max-width: 991px) {
+  .w-layout-blockcontainer {
+    max-width: 728px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .w-layout-blockcontainer {
+    max-width: none;
+  }
+}
+
+body {
+  color: #333;
+  font-family: IBM Plex Sans, sans-serif;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+h1 {
+  margin-top: 20px;
+  margin-bottom: 38px;
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 44px;
+}
+
+h2 {
+  letter-spacing: .3em;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-family: IBM Plex Mono, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 36px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 27px;
+  line-height: 27px;
+}
+
+a {
+  color: #000;
+  text-decoration: underline;
+}
+
+.navbar {
+  color: #fff;
+  background-color: #fff;
+}
+
+.container {
+  color: #000;
+  font-family: IBM Plex Mono, sans-serif;
+  font-weight: 500;
+}
+
+.body {
+  color: #292929;
+  font-family: IBM Plex Sans, sans-serif;
+  font-size: 18px;
+}
+
+.nav-link {
+  height: auto;
+  color: #000;
+  -webkit-text-fill-color: inherit;
+  background-clip: border-box;
+  padding-top: 20px;
+}
+
+.nav-link-2 {
+  color: #000;
+  display: inline-block;
+}
+
+.nav-link-2.w--current {
+  color: #000;
+  text-decoration: underline;
+}
+
+.nav-link-3 {
+  color: #000;
+}
+
+.section {
+  height: 300px;
+  background-color: #77d1cb;
+  background-image: url('../images/clinic_banner.png');
+  background-position: 50% 49%;
+  background-repeat: repeat;
+  background-size: cover;
+  background-attachment: scroll;
+  margin-bottom: 10px;
+  padding-bottom: 0;
+  display: block;
+}
+
+.image {
+  width: 114px;
+  margin-top: 0;
+}
+
+.heading {
+  text-align: left;
+}
+
+.paragraph {
+  text-align: left;
+  margin-top: 30px;
+  padding-top: 0;
+}
+
+.quick-stack {
+  grid-column-gap: 11px;
+  grid-row-gap: 23px;
+}
+
+.quick-stack-2 {
+  grid-row-gap: 20px;
+}
+
+.heading-2, .paragraph-2 {
+  text-align: right;
+}
+
+.button {
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #000;
+  border: 6px solid #fff;
+  border-radius: 20px;
+  flex: 0 auto;
+  align-self: flex-end;
+  padding-left: 22px;
+  padding-right: 23px;
+  font-family: IBM Plex Mono, sans-serif;
+  font-size: 14px;
+}
+
+.button:hover {
+  border: 6px solid #00c5c2;
+}
+
+.div-block {
+  min-height: 30vh;
+  text-align: left;
+  font-family: IBM Plex Mono, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.section-2 {
+  min-height: 375px;
+  mix-blend-mode: normal;
+  background-image: url('../images/colors_background_fixsvg.jpg');
+  background-position: 50% 0;
+  background-size: auto;
+  background-attachment: scroll;
+}
+
+.free-text-button {
+  color: #000;
+  background-color: #fff;
+  border: 1px dashed #000;
+  border-radius: 0;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-family: IBM Plex Mono, sans-serif;
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 700;
+  transition: background-color .875s;
+  display: inline-block;
+}
+
+.free-text-button:hover {
+  background-color: #e7e7e7;
+}
+
+.section-3 {
+  width: 100%;
+  text-align: center;
+}
+
+.books-intro {
+  min-height: 30px;
+  margin-bottom: 103px;
+  padding-bottom: 0;
+}
+
+.heading-3 {
+  color: #5f5f5f;
+  text-align: center;
+  border-bottom: 1px dotted #000;
+  margin-top: 29px;
+  margin-bottom: 77px;
+  padding-top: 103px;
+  padding-bottom: 27px;
+  font-family: IBM Plex Mono, sans-serif;
+  font-size: 43px;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.footer {
+  height: 500px;
+  background-color: #464646;
+}
+
+.form-block {
+  width: 100%;
+}
+
+.container-3 {
+  max-width: var(--smaller-container-width);
+}
+
+.container-4 {
+  max-width: var(--smaller-container-width);
+  aspect-ratio: auto;
+  text-align: left;
+  padding-bottom: 0;
+  display: block;
+  overflow: visible;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.typeform-wrapper-xbmxe4tu {
+  height: 1000px;
+  border-radius: 0;
+}
+
+.image-3 {
+  margin-top: 6px;
+  margin-left: -32px;
+  padding-top: 0;
+  padding-left: 0;
+}
+
+.text-block {
+  color: #000;
+  margin-top: 19px;
+  font-family: Bricolage Grotesque, sans-serif;
+  font-size: 27px;
+}
+
+.image-4 {
+  margin-top: 12px;
+}
+
+.image-4.nav-link-2 {
+  margin-top: 0;
+  padding: 14px 20px 10px;
+}
+
+.button-2 {
+  color: #000;
+  text-align: center;
+  background-color: #f0f0f0;
+  background-image: url('https://d3e54v103j8qbb.cloudfront.net/img/background-image.svg');
+  background-position: 0 0;
+  background-size: auto;
+  border: 3px solid #000;
+  border-radius: 0;
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  display: block;
+}
+
+.button-2:hover {
+  border-color: #91c4b2;
+}
+
+@media screen and (max-width: 991px) {
+  .section {
+    height: 300px;
+    background-attachment: scroll;
+    margin-bottom: 10px;
+  }
+
+  .container-2 {
+    margin-top: 58px;
+  }
+
+  .cell {
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-columns: 1fr;
+    display: grid;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .section {
+    height: 200px;
+  }
+
+  .container-2 {
+    margin-top: 1px;
+    padding-left: 15px;
+    padding-right: 18px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  h1 {
+    margin-bottom: 7px;
+    font-size: 29px;
+    line-height: 34px;
+  }
+
+  .image {
+    width: 98px;
+    aspect-ratio: auto;
+  }
+
+  .container-2 {
+    margin-top: 1px;
+    padding-top: 0;
+    padding-left: 15px;
+    padding-right: 17px;
+  }
+
+  .quick-stack {
+    grid-row-gap: 38px;
+  }
+}
+
+
