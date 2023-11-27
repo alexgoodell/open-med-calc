@@ -3,7 +3,9 @@
 The Wells DVT Criteria is used to assess the risk of deep vein thrombosis (DVT). Points are given for certain risk factors, with the total score indicating the likelihood of DVT. The total score can range from -2 to 9. A score of 2 or higher indicates a high probability of DVT, 1 to 1 indicates moderate probability, and 0 or lower indicates low probability. This scoring system is intended to be used alongside diagnostic testing, such as D-dimer tests and ultrasound, to guide the management of patients with suspected DVT 
 
 ### Calculation
+
 A sum of points is calculated based on the presence of the following risk factors:
+
 - Lower limb trauma, surgery, or plaster immobilization: `1 point`
 - Immobilization or recent surgery: `1 point`
 - Tenderness along the deep venous system: `1 point`
@@ -18,9 +20,9 @@ A sum of points is calculated based on the presence of the following risk factor
 - Alternative diagnosis as likely or more likely than DVT: `-2 points`
 
 ### Scoring
-  - `≥2 points`: High probability of DVT
-  - `1 point`: Moderate probability of DVT
-  - `0 or below`: Low probability of DVT
+- `≥2 points`: High probability of DVT
+- `1 point`: Moderate probability of DVT
+- `0 or below`: Low probability of DVT
 
 ### Considerations
 
