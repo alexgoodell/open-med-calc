@@ -22,6 +22,8 @@ cd open-med-calc
 uvicorn main:app --reload
 ```
 
+
+
 ## To run the app remotely
 
 1. Install docker and docker-compose on remote server

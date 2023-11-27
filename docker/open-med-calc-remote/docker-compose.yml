@@ -3,7 +3,8 @@ services:
   omc:
     image: tiangolo/uvicorn-gunicorn-fastapi:python3.11
     container_name: omc-container
-    # environment:
+    environment:
+      - IS_LOCAL_ENV=0
     volumes:
       - app:/app
     ports:
@@ -12,7 +13,3 @@ services:
 volumes:
   app:
     external: true
-
-
-
-# sudo docker run -d -p 7777:80 -v omc_app:/app --name omc-container omc-image

@@ -1,6 +1,7 @@
 # Project:     open-med-calc
 # File:        api/main.py
 # Created by:  Alex Goodell
+import os
 
 # ============== Imports ==============
 
@@ -10,7 +11,7 @@ from pathlib import Path
 from typing import Optional
 from pydantic import BaseModel, Field
 import numpy as np
-from variable_descriptions import var_description
+from variable_descriptions import *
 from model_classes import *
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -74,9 +75,17 @@ for file in Path('calculator_docs/full_calculator_pages').glob('*.md'):
 
 # ============== API ==============
 
+if os.environ.get('IS_LOCAL_ENV'):
+    openapi_url = "/api/openapi.json"
+    api_root = "http://localhost:7777/api"
+else:
+    openapi_url = "https://api.openmedcalc.org/openapi.json"
+    api_root = "https://api.openmedcalc.org/"
+
+
 api = FastAPI(
-    swagger_ui_parameters={"url": "https://api.openmedcalc.org/openapi.json",
-                           "openapi_url": "https://api.openmedcalc.org/openapi.json"},
+    swagger_ui_parameters={"url": openapi_url,
+                           "openapi_url": openapi_url},
     title="OpenMedCalc API",
     description="OpenMedCalc API helps you calculate medical scores and indices.",
     summary="The open source medical calculator",
@@ -86,7 +95,7 @@ api = FastAPI(
         "url": "http://openmedcalc.org/contact",
         "email": "info@openmedcalc.org",
     },
-    servers=[{'url': 'https://api.openmedcalc.org', 'description': 'primary SSL endpoint'}],
+    servers=[{'url': api_root, 'description': 'primary SSL endpoint'}],
     root_path="/api",
     root_path_in_servers=False
 )
@@ -230,27 +239,27 @@ async def calculate_caprini(calc: CalcRequestCapriniVte):
         caprini_vte_score += 3
 
     # sex has no impact on score
-    if calc.sex == "M":
+    if calc.sex == calc.sex.male:
         caprini_vte_score += 0
-    elif calc.sex == "F":
+    elif calc.sex == calc.sex.male:
         caprini_vte_score += 0
 
     # type of surgery
-    if calc.type_of_surgery == "not scheduled for surgery":
+    if calc.type_of_surgery == calc.type_of_surgery.none:
         caprini_vte_score += 0
-    elif calc.type_of_surgery == "minor surgery":
+    elif calc.type_of_surgery == calc.type_of_surgery.minor:
         caprini_vte_score += 1
-    elif calc.type_of_surgery == "major surgery":
+    elif calc.type_of_surgery == calc.type_of_surgery.major:
         caprini_vte_score += 2
-    elif calc.type_of_surgery == "major lower extremity surgery":
+    elif calc.type_of_surgery == calc.type_of_surgery.major_lower_extremity:
         caprini_vte_score += 5
 
     # mobility
-    if calc.mobility == "normal/ambulatory":
+    if calc.mobility == calc.mobility.ambulatory:
         caprini_vte_score += 0
-    elif calc.mobility == "bedrest or only walking in room":
+    elif calc.mobility == calc.mobility.bedrest:
         caprini_vte_score += 1
-    elif calc.mobility == "confined to bed >72 hours":
+    elif calc.mobility == calc.mobility.confined:
         caprini_vte_score += 2
 
     # BMI
