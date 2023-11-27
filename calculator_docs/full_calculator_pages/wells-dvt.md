@@ -20,6 +20,7 @@ A sum of points is calculated based on the presence of the following risk factor
 - Alternative diagnosis as likely or more likely than DVT: `-2 points`
 
 ### Scoring
+
 - `≥2 points`: High probability of DVT
 - `1 point`: Moderate probability of DVT
 - `0 or below`: Low probability of DVT

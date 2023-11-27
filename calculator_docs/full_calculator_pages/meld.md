@@ -8,6 +8,7 @@ Recognizing its accuracy in predicting short-term survival among patients with c
 The original MELD calculator used measurements of creatinine, bilirubin, and INR. It was later discovered that hyponatremia (low sodium concentration in the blood) was an independent predictor of mortality in patients with cirrhosis. Consequently, sodium levels were integrated into the MELD score to improve its predictive accuracy, leading to the creation of the MELD-Na score. This new scoring system, MELDNa, includes the serum sodium parameter to account for the added risk of significant hyponatremia. The MELD-Na calculator thus became a more comprehensive tool for assessing the severity of liver disease and the urgency of liver transplantation.
 
 The **MELD-Na calculator** is designed to:
+
 - Calculate the Model for End-Stage Liver Disease (MELD) score, integrating serum sodium levels.
 - Provide a measure of the severity of liver disease.
 - Aid in determining the priority for liver transplantation based on medical urgency for patients aged 12 and older.
