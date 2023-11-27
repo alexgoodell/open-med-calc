@@ -4,18 +4,18 @@ The Wells DVT Criteria is used to assess the risk of deep vein thrombosis (DVT).
 
 ### Calculation
 A sum of points is calculated based on the presence of the following risk factors:
-  - Lower limb trauma, surgery, or plaster immobilization: `1 point`
-  - Immobilization or recent surgery: `1 point`
-  - Tenderness along the deep venous system: `1 point`
-  - Entire leg swelling: `1 point`
-  - Calf swelling >3 cm compared to the asymptomatic leg: `1 point`
-  - Pitting edema, confined to the symptomatic leg: `1 point`
-  - Collateral nonvaricose superficial veins: `1 point`
-  - Previously documented DVT: `1 point`
-  - Active cancer: `1 point`
-  - Paralysis, paresis, or recent plaster immobilization: `1 point`
-  - Recently bedridden >3 days or major surgery within 4 weeks: `1 point`
-  - Alternative diagnosis as likely or more likely than DVT: `-2 points`
+- Lower limb trauma, surgery, or plaster immobilization: `1 point`
+- Immobilization or recent surgery: `1 point`
+- Tenderness along the deep venous system: `1 point`
+- Entire leg swelling: `1 point`
+- Calf swelling >3 cm compared to the asymptomatic leg: `1 point`
+- Pitting edema, confined to the symptomatic leg: `1 point`
+- Collateral nonvaricose superficial veins: `1 point`
+- Previously documented DVT: `1 point`
+- Active cancer: `1 point`
+- Paralysis, paresis, or recent plaster immobilization: `1 point`
+- Recently bedridden >3 days or major surgery within 4 weeks: `1 point`
+- Alternative diagnosis as likely or more likely than DVT: `-2 points`
 
 ### Scoring
   - `≥2 points`: High probability of DVT
