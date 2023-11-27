@@ -48,10 +48,16 @@ async def read_contact(request: Request):
     return templates.TemplateResponse("contact.html", {"request": request})
 
 
-@app.get("/meld", response_class=HTMLResponse)
-async def read_meld(request: Request):
-    return templates.TemplateResponse("blank.html", {"request": request, "content": full_calculator_pages('meld')})
+async def read_full_calculator_page(request: Request):
+    # get route
+    route_last = str(request.url).split("/")[-1]
+    content = markdown.markdown(full_calculator_pages(route_last))
+    return templates.TemplateResponse("blank.html", {"request": request, "content": content})
 
+
+# for each file in calculator_docs/full_calculator_pages, add a route
+for file in Path('calculator_docs/full_calculator_pages').glob('*.md'):
+    app.add_route(f'/{file.stem}', read_full_calculator_page)
 
 # ============== API ==============
 
@@ -61,7 +67,7 @@ api = FastAPI(
     title="OpenMedCalc API",
     description="OpenMedCalc API helps you calculate medical scores and indices.",
     summary="The open source medical calculator",
-    terms_of_service="http://openmedcalc.org/terms",
+    terms_of_service="http://openmedcalc.org/about",
     contact={
         "name": "OpenMedCalc",
         "url": "http://openmedcalc.org/contact",
@@ -71,7 +77,6 @@ api = FastAPI(
     root_path="/api",
     root_path_in_servers=False
 )
-
 app.mount("/api", api)
 
 
