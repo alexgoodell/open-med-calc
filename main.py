@@ -104,7 +104,7 @@ async def catch_all(request: Request, path_name: str):
 # API redirect routes
 redirects = [{'from': '/redoc',      'to': 'https://openmedcalc.org/api/redoc'}]
 for redirect in redirects:
-    app.add_api_route(redirect['from'], lambda: RedirectResponse(url=redirect['to']))
+    api.add_api_route(redirect['from'], lambda: RedirectResponse(url=redirect['to']))
 
 
 # ----------------- Welcome -----------------
