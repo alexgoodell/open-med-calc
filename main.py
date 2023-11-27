@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field
 import numpy as np
 from variable_descriptions import var_description
 from model_classes import *
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import markdown
@@ -47,13 +47,26 @@ async def read_about(request: Request):
 async def read_contact(request: Request):
     return templates.TemplateResponse("contact.html", {"request": request})
 
+# -------------------------------------------- redirects --------------------------------------------
+
+redirects = [
+    {'from': '/meld',      'to': '/meld-na'},
+    {'from': '/chatbot',   'to': '/chat'},
+    {'from': '/bot',       'to': '/chat'},
+    {'from': '/chat',      'to': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc'}
+]
+
+for redirect in redirects:
+    app.add_api_route(redirect['from'], lambda: RedirectResponse(url=redirect['to']))
+
+
+# ------------------------------------ about calculator pages -------------------------------------
 
 async def read_full_calculator_page(request: Request):
     # get route
     route_last = str(request.url).split("/")[-1]
     content = markdown.markdown(full_calculator_pages(route_last))
     return templates.TemplateResponse("blank.html", {"request": request, "content": content})
-
 
 # for each file in calculator_docs/full_calculator_pages, add a route
 for file in Path('calculator_docs/full_calculator_pages').glob('*.md'):
@@ -87,6 +100,12 @@ async def catch_all(request: Request, path_name: str):
 
 
 # ================= API Routes ==================
+
+# API redirect routes
+redirects = [{'from': '/redoc',      'to': 'https://openmedcalc.org/api/redoc'}]
+for redirect in redirects:
+    app.add_api_route(redirect['from'], lambda: RedirectResponse(url=redirect['to']))
+
 
 # ----------------- Welcome -----------------
 @api.get("/", summary="Welcome")
