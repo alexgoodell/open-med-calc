@@ -24,6 +24,7 @@ MELD scores, which the calculator determines, range from 6 to 40. A higher MELD 
 ### Parameters
 
 The MELD-Na calculation uses the following laboratory values:
+
 - `Creatinine` (mg/dL)
 - `Bilirubin` (mg/dL)
 - `INR` (International Normalized Ratio)
@@ -32,7 +33,7 @@ The MELD-Na calculation uses the following laboratory values:
 ### Notes
 
 - This score is used for patients above the age of 12 years.
-- The calculator includes United Network for Organ Sharing (UNOS) modifications of the original model&#8203;``【oaicite:3】``&#8203;&#8203;``【oaicite:2】``&#8203;&#8203;``【oaicite:1】``&#8203;&#8203;``【oaicite:0】``&#8203;.
+- The calculator includes United Network for Organ Sharing (UNOS) modifications of the original model.
 
 ### References:
 - Kamath PS, Wiesner RH, Malinchoc M, Kremers W, Therneau TM, Kosberg CL, D'Amico G, Dickson ER, Kim WR. A model to predict survival in patients with end-stage liver disease. Hepatology. 2001 Feb;33(2):464-70. Available at: [Pubmed](https://www.ncbi.nlm.nih.gov/pubmed/11172350).
