@@ -7,3 +7,7 @@ backup:
 	git add .
 	git commit -m "update"
 	git push origin main
+
+
+local_run_docker:
+	docker restart omc-container; docker attach omc-container

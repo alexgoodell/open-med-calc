@@ -10,7 +10,7 @@ var_description = dict()
 class SurgeryType(Enum):
     none = "not scheduled for surgery"
     minor = "minor surgery"
-    major = "major surgery"
+    major = "major surgery (not lower extremity)"
     major_lower_extremity = "major lower extremity surgery"
 
 
@@ -97,7 +97,7 @@ var_description['type_of_surgery'] = Field(
                 "surgery refers to procedures with general or regional anesthesia time exceeding 45 minutes. Major"
                 "lower extremity surgery refers to procedures anesthesia time exceeding 45 minutes and involving "
                 "the hip, knee, thigh, or ankle. The only accepted inputs are: 'not scheduled for surgery', 'minor "
-                "surgery', 'major surgery', or 'major lower extremity surgery'."
+                "surgery', 'major lower extremity surgery', or 'major surgery (not lower extremity)'."
 )
 var_description['recent_major_surgery'] = Field(
     default=False,
