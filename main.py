@@ -278,8 +278,10 @@ async def calculate_caprini(calc: CalcRequestCapriniVte):
         caprini_vte_score += 1
     if calc.recent_preg:
         caprini_vte_score += 1
+
     if calc.recent_cast:
         caprini_vte_score += 2
+
     if calc.recent_fracture:
         caprini_vte_score += 5
     if calc.recent_stroke:
@@ -288,12 +290,15 @@ async def calculate_caprini(calc: CalcRequestCapriniVte):
         caprini_vte_score += 5
     if calc.recent_spinal_cord_injury:
         caprini_vte_score += 5
+
     if calc.varicose_veins:
         caprini_vte_score += 1
     if calc.current_swollen_legs:
         caprini_vte_score += 1
+
     if calc.current_central_venous_access:
         caprini_vte_score += 2
+
     if calc.history_of_dvt_pe:
         caprini_vte_score += 3
     if calc.family_history_of_thrombosis:
@@ -312,6 +317,7 @@ async def calculate_caprini(calc: CalcRequestCapriniVte):
         caprini_vte_score += 3
     if calc.other_congenital_or_acquired_thrombophilia:
         caprini_vte_score += 3
+
     if calc.history_of_inflammatory_bowel_disease:
         caprini_vte_score += 1
     if calc.acute_mi:
@@ -319,7 +325,7 @@ async def calculate_caprini(calc: CalcRequestCapriniVte):
     if calc.copd:
         caprini_vte_score += 1
     if calc.present_or_previous_malignancy:
-        caprini_vte_score += 1
+        caprini_vte_score += 2
     if calc.other_risk_factors:
         caprini_vte_score += 1
 
