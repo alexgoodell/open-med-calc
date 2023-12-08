@@ -11,6 +11,10 @@ This is a simple open-source API which allows users to calculate common medical 
 It is built using [FastAPI](https://fastapi.tiangolo.com/) and follows the OpenAPI specification.
 It can be integrated into other applications such as OpenAI's new GPTs functionality.
 
+Interactive live API documenation available here:
+- [Redoc](https://openmedcalc.org/api/redoc)
+- [Swagger UI](https://api.openmedcalc.org/docs) 
+
 ## To run the app locally
 
 1. Clone the repo
@@ -21,8 +25,6 @@ It can be integrated into other applications such as OpenAI's new GPTs functiona
 cd open-med-calc
 uvicorn main:app --reload
 ```
-
-
 
 ## To run the app remotely
 
@@ -41,19 +43,16 @@ cd open-med-calc
 uvicorn main:app --reload
 ```
 
-
 ## Current forumlas
 
 - MELD
 - MELD-Na
-
+- Caprini VTE
+- Wells DVT score
 
 ## To do
 
+- Improve documentation
 - Add more formulas
 
-## Contributors
-
-- [Alex Goodell, Stanford Anesthesia](https://github.com/alexgoodell)
-- Simon Chu, UCSF Surgery
 

@@ -1,0 +1,81 @@
+{
+  "name": "calc_wells_dvt",
+  "description": "Wells' Criteria for deep vein thrombosis (DVT) is a tool to estimate the probability of the presence of DVT. For more information, see https://openmedcalc.org/wells-dvt",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "active_cancer": {
+        "type": "boolean",
+        "title": "Active cancer",
+        "description": "Does the patient have active cancer (treatment or palliation within 6 months)?",
+        "default": false
+      },
+      "bedridden_recently": {
+        "type": "boolean",
+        "title": "Bedridden recently",
+        "description": "Has the patient been bedridden recently (greater than 3 days) or had major surgery within 12 weeks?",
+        "default": false
+      },
+      "calf_swelling": {
+        "type": "boolean",
+        "title": "Calf swelling",
+        "description": "Does the patient have calf swelling greater than 3 cm compared to the other leg? (measured 10 cm below tibial tuberosity)",
+        "default": false
+      },
+      "collateral_veins": {
+        "type": "boolean",
+        "title": "Collateral veins",
+        "description": "Does the patient have collateral (nonvaricose) superficial veins?",
+        "default": false
+      },
+      "entire_leg_swollen": {
+        "type": "boolean",
+        "title": "Entire leg swollen",
+        "description": "Does that patient have an entire leg which is swollen?",
+        "default": false
+      },
+      "localized_tenderness": {
+        "type": "boolean",
+        "title": "Localized tenderness",
+        "description": "Does the patient have localized tenderness along a deep venous system?",
+        "default": false
+      },
+      "pitting_edema": {
+        "type": "boolean",
+        "title": "Pitting edema",
+        "description": "Does the patient have pitting edema, confined to symptomatic leg?",
+        "default": false
+      },
+      "paralysis_paresis_or_plaster": {
+        "type": "boolean",
+        "title": "Paralysis, paresis, or plaster immobilization",
+        "description": "Does the patient have paralysis, paresis, or recent plaster immobilization of the lower extremity?",
+        "default": false
+      },
+      "previous_dvt": {
+        "type": "boolean",
+        "title": "Previously documented DVT",
+        "description": "Does the patient have previously-documented DVT?",
+        "default": false
+      },
+      "alternative_diagnosis_as_likely": {
+        "type": "boolean",
+        "title": "Alternative diagnosis to DVT",
+        "description": "Does the patient have alternative diagnosis to DVT as likely or more likely?",
+        "default": false
+      }
+    },
+    "required": [
+      "active_cancer",
+      "bedridden_recently",
+      "calf_swelling",
+      "collateral_veins",
+      "entire_leg_swollen",
+      "localized_tenderness",
+      "pitting_edema",
+      "paralysis_paresis_or_plaster",
+      "previous_dvt",
+      "alternative_diagnosis_as_likely"
+    ]
+  }
+}
