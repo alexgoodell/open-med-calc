@@ -1,0 +1,1 @@
+The PSI/PORT score: Pneumonia severity index estimates the mortality for adult patients and their risk of acquring pneumonia. See https://openmedcalc.org/psi-port for more information. 
