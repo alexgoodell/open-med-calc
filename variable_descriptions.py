@@ -32,7 +32,7 @@ var_description['success'] = Field(
 var_description['message'] = Field(
     default="message",
     title='Result message',
-    description='Summarizes the results of the caluclation'
+    description='Summarizes the results of the calculation'
 )
 var_description['additional_info'] = Field(
     default="info",
@@ -328,7 +328,117 @@ var_description['alternative_diagnosis_as_likely'] = Field(
     description="Does the patient have alternative diagnosis to DVT as likely or more likely?"
 )
 
+# PSI / PORT ------------------------------------------------------
+var_description['nursing_home_resident'] = Field(
+    default=False,
+    title="Nursing home resident",
+    description="Is the patient a nursing home resident?"
+)
+var_description['neoplastic_disease'] = Field(
+    default=False,
+    title="Neoplastic disease",
+    description="Does the patient have neoplastic disease?"
+)
+var_description['liver_disease'] = Field(
+    default=False,
+    title="Liver disease",
+    description="Does the patient have liver disease?"
+)
+var_description['congestive_heart_failure'] = Field(
+    default=False,
+    title="Congestive heart failure",
+    description="Does the patient have congestive heart failure?"
+)
+var_description['cerebrovascular_disease'] = Field(
+    default=False,
+    title="Cerebrovascular disease",
+    description="Does the patient have cerebrovascular disease?"
+)
+var_description['renal_disease'] = Field(
+    default=False,
+    title="Renal disease",
+    description="Does the patient have renal disease?"
+)
+var_description['altered_mental_status'] = Field(
+    default=False,
+    title="Altered mental status",
+    description="Does the patient have altered mental status?"
+)
+var_description['respiratory_rate'] = Field(
+    default=20,
+    title="Respiratory rate",
+    description="Respiratory rate in breaths per minute",
+    gt=0,
+    lt=100
+)
+var_description['systolic_bp'] = Field(
+    default=90,
+    title="Systolic blood pressure",
+    description="Systolic blood pressure in mmHg",
+    gt=0,
+    lt=300
+)
+var_description['temperature'] = Field(
+    default=37.8,
+    title="Temperature",
+    description="Temperature in degrees Celsius",
+    gt=0,
+    lt=50
+)
+var_description['pulse'] = Field(
+    default=125,
+    title="Pulse",
+    description="Pulse in beats per minute",
+    gt=0,
+    lt=300
+)
+var_description['ph'] = Field(
+    default=7.35,
+    title="pH",
+    description="pH",
+    gt=0,
+    lt=10
+)
+var_description['glucose'] = Field(
+    default=250,
+    title="Glucose",
+    description="Glucose in mg/dL",
+    gt=0,
+    lt=1000
+)
 
+var_description['bun'] = Field(
+    default=1,
+    title="BUN",
+    description="Blood urea nitrogen in mg/dL",
+    gt=0,
+    lt=100
+)
+var_description['sodium_mmol/l'] = Field(
+    default=136.0,
+    title='Serum sodium in mmol/L',
+    description='Also known as \'Na.\' This is the patient\'s serum sodium in mmol/L and should be in a range between '
+                '136 and 145 mmol/L',
+)
+var_description['hematocrit'] = Field(
+    default=30,
+    title="Hematocrit",
+    description="Hematocrit in %",
+    gt=0,
+    lt=100
+)
+var_description['pao2'] = Field(
+    default=60,
+    title="PaO2",
+    description="PaO2 in mmHg",
+    gt=0,
+    lt=1000
+)
+var_description['pleural_effusion'] = Field(
+    default=False,
+    title="Pleural effusion",
+    description="Does the patient have a pleural effusion?"
+)
 
 # -------------  response and request models  -----------------
 
@@ -406,7 +516,28 @@ class CalcRequestWellsDvt(BaseModel):
     previous_dvt: bool = var_description['previous_dvt']
     alternative_diagnosis_as_likely: bool = var_description['alternative_diagnosis_as_likely']
 
-
+# -------------  PSI/PORT  -----------------
+class CalcRequestPsiPort(BaseModel):
+    age: int = var_description['age']
+    sex: Sex = var_description['sex']
+    nursing_home_resident: bool = var_description['nursing_home_resident']
+    neoplastic_disease: bool = var_description['neoplastic_disease']
+    liver_disease: bool = var_description['liver_disease']
+    congestive_heart_failure: bool = var_description['congestive_heart_failure']
+    cerebrovascular_disease: bool = var_description['cerebrovascular_disease']
+    renal_disease: bool = var_description['renal_disease']
+    altered_mental_status: bool = var_description['altered_mental_status']
+    respiratory_rate: int = var_description['respiratory_rate']
+    systolic_bp: int = var_description['systolic_bp']
+    temperature: float = var_description['temperature']
+    pulse: int = var_description['pulse']
+    ph: float = var_description['ph']
+    bun: int = var_description['bun']
+    sodium: int = var_description['sodium_mmol/l']
+    glucose: int = var_description['glucose']
+    hematocrit: int = var_description['hematocrit']
+    pao2: int = var_description['pao2']
+    pleural_effusion: int = var_description['pleural_effusion']
 
 if __name__ == "__main__":
     print("you've reached this message in error")
