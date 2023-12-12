@@ -1,9 +1,9 @@
-
-![logo.svg](static%2Fimgs%2Flogo.svg)
+# OpenMedCalc
 
 ![GitHub issues](https://img.shields.io/github/issues/alexgoodell/open-med-calc)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/alexgoodell/open-med-calc)
 ![GitHub last commit](https://img.shields.io/github/last-commit/alexgoodell/open-med-calc)
+[![DOI](https://zenodo.org/badge/717889575.svg)](https://zenodo.org/doi/10.5281/zenodo.10360457)
 
 ## About
 
