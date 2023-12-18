@@ -56,3 +56,6 @@ uvicorn main:app --reload
 - Add more formulas
 
 
+## Similar projects
+
+- [Clincal Calculation API](https://github.com/bawmedical/clinical-calculation-api)
