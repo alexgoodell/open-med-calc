@@ -10,7 +10,7 @@
 This is a simple open-source API which allows users to calculate common medical formulas. 
 It is built using [FastAPI](https://fastapi.tiangolo.com/) and follows the OpenAPI specification.
 It can be integrated into other applications such as OpenAI's new GPTs functionality.
-*For educational use only*. *Not for patient care*.
+**For educational use only. Not for patient care**.
 
 Preprint describing its use integrated into ChatGPT is available on [Medrxiv](https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1).
 
@@ -52,7 +52,7 @@ uvicorn main:app --reload
 - MELD-Na
 - Caprini VTE
 - Wells DVT score
-- PSI/PORT (*BETA*)
+- PSI/PORT (**BETA**)
 
 ## To do
 
