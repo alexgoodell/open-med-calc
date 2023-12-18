@@ -406,3 +406,98 @@ async def calculate_wells_dvt(calc: CalcRequestWellsDvt):
                f" risk category; individuals in this group had a {prevalence_of_dvt} prevalence of deep vein thrombosis.")
     response = CalcResponse(success=True, score=wells_dvt_score, message=message, additional_info=additional_info)
     return response
+
+
+# -------------- PSI/PORT -----------------
+@api.post("/psi-port", summary="Calculate the PSI/PORT Score Pneumonia Severity Index for CAP",
+          response_model=CalcResponse,
+          description=calc_docs('psi-port'))
+async def calculate_psi_port(calc: CalcRequestPsiPort):
+    additional_info = calc_docs('psi-port')
+
+    psi_port_score = 0
+
+    # demographic: age & gender
+    psi_port_score += calc.age
+    if calc.sex != calc.sex.male:
+        psi_port_score -= 10
+    elif calc.sex == calc.sex.male:
+        psi_port_score += 0
+
+    # nursing home resident
+    if calc.nursing_home_resident:
+        psi_port_score += 10
+
+    # Coexisting illnesses
+    if calc.neoplastic_disease:
+        psi_port_score += 30
+    if calc.liver_disease:
+        psi_port_score += 20
+    if calc.congestive_heart_failure:
+        psi_port_score += 10
+    if calc.cerebrovascular_disease:
+        psi_port_score += 10
+    if calc.renal_disease:
+        psi_port_score += 10
+
+    # physical examination
+    if calc.altered_mental_status:
+        psi_port_score += 20
+    if calc.respiratory_rate >= 30:
+        psi_port_score += 20
+    if calc.systolic_bp < 90:
+        psi_port_score += 20
+    if calc.pulse >= 125:
+        psi_port_score += 10
+    if calc.temperature < 35 or calc.temperature > 40:
+        psi_port_score += 15
+    # lab and radiographic findings
+    if calc.ph < 7.35:
+        psi_port_score += 30
+    if calc.bun >= 30:
+        psi_port_score += 20
+    if calc.sodium_mmol_L < 130:
+        psi_port_score += 20
+    # glucose mg/dL
+    if calc.glucose >= 250:
+        psi_port_score += 10
+    # glucose mmol/L
+    elif calc.glucose >= 14:
+        psi_port_score += 10
+    if calc.hematocrit < 30:
+        psi_port_score += 10
+    if calc.pao2 < 60:
+        psi_port_score += 10
+    if calc.pleural_effusion:
+        psi_port_score += 10
+
+    # risk category
+    if psi_port_score <= 50:
+        risk_category = "low"
+        risk_class = "I"
+    elif 50 <= psi_port_score <= 70:
+        risk_category = "low"
+        risk_class = "II"
+    elif 71 <= psi_port_score <= 90:
+        risk_category = "moderate"
+        risk_class = "III"
+    elif 91 <= psi_port_score <= 130:
+        risk_category = "high"
+        risk_class = "IV"
+    elif psi_port_score >= 130:
+        risk_category = "high"
+        risk_class = "V"
+    if psi_port_score < 50 & calc.age >= 50:
+        risk_category = "low"
+        risk_class = "II"
+
+    # | PSI/PORT Score | Risk class | Risk category | Recommended disposition |
+    # | <=50 | I | Low risk | Outpatient care |
+    # | <= 70 | II | Low risk | Outpatient care |
+    # | 71-90 | III | Low risk | Outpatient vs. Observation admission |
+    # | 91-130 | IV | Medium risk | Inpatient admission |
+    # | >=130 | V | High risk | Inpatient admission |
+
+    message = f"The patient's PSI/PORT score is {psi_port_score}. This correlates to a risk class {risk_class} with {risk_category} risk mortality for patients with community-acquired pneumonia."
+    response = CalcResponse(success=True, score=psi_port_score, message=message, additional_info=additional_info)
+    return response
