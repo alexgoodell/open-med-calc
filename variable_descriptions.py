@@ -414,7 +414,7 @@ var_description['bun'] = Field(
     gt=0,
     lt=100
 )
-var_description['sodium_mmol/l'] = Field(
+var_description['sodium_mmol_L'] = Field(
     default=136.0,
     title='Serum sodium in mmol/L',
     description='Also known as \'Na.\' This is the patient\'s serum sodium in mmol/L and should be in a range between '
@@ -533,7 +533,7 @@ class CalcRequestPsiPort(BaseModel):
     pulse: int = var_description['pulse']
     ph: float = var_description['ph']
     bun: int = var_description['bun']
-    sodium: int = var_description['sodium_mmol/l']
+    sodium_mmol_L: int = var_description['sodium_mmol_L']
     glucose: int = var_description['glucose']
     hematocrit: int = var_description['hematocrit']
     pao2: int = var_description['pao2']
