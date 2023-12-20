@@ -54,7 +54,9 @@ redirects = [
     {'from': '/meld',      'to': '/meld-na'},
     {'from': '/chatbot',   'to': '/chat'},
     {'from': '/bot',       'to': '/chat'},
-    {'from': '/chat',      'to': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc'}
+    {'from': '/chat',      'to': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc'},
+    {'from': '/paper',      'to': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1'},
+    {'from': '/preprint',      'to': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1'}
 ]
 
 for redirect in redirects:
