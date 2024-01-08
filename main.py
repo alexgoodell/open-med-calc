@@ -60,7 +60,7 @@ redirects = [
 ]
 
 for redirect in redirects:
-    app.add_api_route(redirect['from'], lambda: RedirectResponse(url=redirect['to']))
+    app.add_route(redirect['from'], lambda: RedirectResponse(url=redirect['to']))
 
 
 # ------------------------------------ about calculator pages -------------------------------------
