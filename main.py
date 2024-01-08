@@ -60,12 +60,12 @@ async def read_contact(request: Request):
 # app.include_router(router)
 
 redirects = {
-    '/meld': '/meld-na',
-    '/chatbot': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
-    '/bot': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
-    '/chat': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
-    '/paper': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1',
-    '/preprint': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1'
+    'meld': '/meld-na',
+    'chatbot': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
+    'bot': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
+    'chat': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
+    'paper': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1',
+    'preprint': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1'
 }
 
 
