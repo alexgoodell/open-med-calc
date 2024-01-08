@@ -55,22 +55,24 @@ async def read_contact(request: Request):
 # -------------------------------------------- redirects --------------------------------------------
 
 
-async def redirect(from_url):
-    return RedirectResponse(url=from_url)
+async def meld_redirect():
+    return RedirectResponse(url="/meld-na")
+
+
+async def chat_redirect():
+    return RedirectResponse(url="https://chat.openai.com/g/g-mtNkUsX41-openmedcalc")
+
+async def paper_redirect():
+    return RedirectResponse(url="https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1")
 
 
 # router = APIRouter()
-app.add_api_route('/meld', endpoint=lambda: redirect("/meld-na"))
-# app.include_router(router)
-#     redirects = {
-#     '/meld': '/meld-na',
-#     '/chatbot': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
-#     '/bot': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
-#     '/chat': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
-#     '/paper': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1',
-#     '/preprint': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1'
-#     }
-
+app.add_api_route('/meld', endpoint=meld_redirect)
+app.add_api_route('/chat', endpoint=chat_redirect)
+app.add_api_route('/chatbot', endpoint=chat_redirect)
+app.add_api_route('/bot', endpoint=chat_redirect)
+app.add_api_route('/paper', endpoint=paper_redirect)
+app.add_api_route('/preprint', endpoint=paper_redirect)
 
 
 # ------------------------------------ about calculator pages -------------------------------------
