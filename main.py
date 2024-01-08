@@ -56,21 +56,21 @@ async def read_contact(request: Request):
 
 
 async def redirect(from_url):
-    return RedirectResponse(url=redirects[from_url])
+    return RedirectResponse(url=from_url)
 
 
 # router = APIRouter()
-app.add_api_route('/meld', lambda: redirect("/meld"))
+app.add_api_route('/meld', lambda: redirect("/meld-na"))
 # app.include_router(router)
+#     redirects = {
+#     '/meld': '/meld-na',
+#     '/chatbot': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
+#     '/bot': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
+#     '/chat': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
+#     '/paper': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1',
+#     '/preprint': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1'
+#     }
 
-redirects = {
-    'meld': '/meld-na',
-    'chatbot': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
-    'bot': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
-    'chat': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
-    'paper': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1',
-    'preprint': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1'
-}
 
 
 # ------------------------------------ about calculator pages -------------------------------------
