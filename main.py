@@ -54,10 +54,14 @@ async def read_contact(request: Request):
 
 # -------------------------------------------- redirects --------------------------------------------
 
-#
-#
-# router = APIRouter()
-# app.include_router(router)
+
+async def redirect(from_url):
+    return RedirectResponse(url=redirects[from_url])
+
+
+router = APIRouter()
+router.add_api_route('/meld', lambda: redirect("/meld"))
+app.include_router(router)
 
 redirects = {
     'meld': '/meld-na',
@@ -67,11 +71,6 @@ redirects = {
     'paper': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1',
     'preprint': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1'
 }
-
-
-@app.get("/{from_url}")
-async def redirect(from_url):
-    return RedirectResponse(url=redirects[from_url])
 
 
 # ------------------------------------ about calculator pages -------------------------------------
