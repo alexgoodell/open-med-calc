@@ -68,7 +68,7 @@ redirects = [
 ]
 
 for redirect in redirects:
-    app.add_api_route(redirect['from'], endpoint=foo(redirect['to']), response_class=RedirectResponse)
+    app.add_api_route(redirect['from'], endpoint=foo(redirect['to']))
 
 
 # ------------------------------------ about calculator pages -------------------------------------
