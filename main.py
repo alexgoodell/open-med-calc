@@ -59,9 +59,9 @@ async def redirect(from_url):
     return RedirectResponse(url=redirects[from_url])
 
 
-router = APIRouter()
-router.add_api_route('/meld', lambda: redirect("/meld"))
-app.include_router(router)
+# router = APIRouter()
+app.add_api_route('/meld', lambda: redirect("/meld"))
+# app.include_router(router)
 
 redirects = {
     'meld': '/meld-na',
