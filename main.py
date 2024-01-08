@@ -5,7 +5,7 @@ import os
 
 # ============== Imports ==============
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, APIRouter
 
 from pathlib import Path
 from typing import Optional
@@ -13,7 +13,7 @@ from pydantic import BaseModel, Field
 import numpy as np
 from variable_descriptions import *
 from model_classes import *
-from fastapi.responses import HTMLResponse, RedirectResponse, APIRouter
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import markdown
