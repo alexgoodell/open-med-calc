@@ -13,7 +13,7 @@ from pydantic import BaseModel, Field
 import numpy as np
 from variable_descriptions import *
 from model_classes import *
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, APIRouter
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import markdown
@@ -50,6 +50,8 @@ async def read_contact(request: Request):
 
 # -------------------------------------------- redirects --------------------------------------------
 
+router = APIRouter()
+
 redirects = [
     {'from': '/meld',      'to': '/meld-na'},
     {'from': '/chatbot',   'to': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc'},
@@ -60,8 +62,9 @@ redirects = [
 ]
 
 for redirect in redirects:
-    app.get(redirect['from'], lambda: RedirectResponse(url=redirect['to']))
+    router.add_api_route(redirect['from'], lambda: RedirectResponse(url=redirect['to']))
 
+app.include_router(router)
 
 # ------------------------------------ about calculator pages -------------------------------------
 
