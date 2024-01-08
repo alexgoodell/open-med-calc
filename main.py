@@ -18,14 +18,17 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import markdown
 
+
 # ============== Functions ==============
 
 def calc_docs(calculator_name: str):
     return Path(f'calculator_docs/short_calculator_info/{calculator_name}.md').read_text()
 
+
 def full_calculator_pages(calculator_name: str):
     md_text = Path(f'calculator_docs/full_calculator_pages/{calculator_name}.md').read_text()
     return md_text
+
 
 # ============== Content server ==============
 
@@ -48,23 +51,28 @@ async def read_about(request: Request):
 async def read_contact(request: Request):
     return templates.TemplateResponse("contact.html", {"request": request})
 
+
 # -------------------------------------------- redirects --------------------------------------------
 
-router = APIRouter()
+#
+#
+# router = APIRouter()
+# app.include_router(router)
 
-redirects = [
-    {'from': '/meld',      'to': '/meld-na'},
-    {'from': '/chatbot',   'to': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc'},
-    {'from': '/bot',       'to': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc'},
-    {'from': '/chat',      'to': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc'},
-    {'from': '/paper',      'to': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1'},
-    {'from': '/preprint',      'to': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1'}
-]
+redirects = {
+    '/meld': '/meld-na',
+    '/chatbot': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
+    '/bot': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
+    '/chat': 'https://chat.openai.com/g/g-mtNkUsX41-openmedcalc',
+    '/paper': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1',
+    '/preprint': 'https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1'
+}
 
-for redirect in redirects:
-    router.add_api_route(redirect['from'], lambda: RedirectResponse(url=redirect['to']))
 
-app.include_router(router)
+@app.get("/{from_url}")
+async def redirect(from_url):
+    return RedirectResponse(url=redirects[from_url])
+
 
 # ------------------------------------ about calculator pages -------------------------------------
 
@@ -73,6 +81,7 @@ async def read_full_calculator_page(request: Request):
     route_last = str(request.url).split("/")[-1]
     content = markdown.markdown(full_calculator_pages(route_last))
     return templates.TemplateResponse("blank.html", {"request": request, "content": content})
+
 
 # for each file in calculator_docs/full_calculator_pages, add a route
 for file in Path('calculator_docs/full_calculator_pages').glob('*.md'):
@@ -86,7 +95,6 @@ if os.environ.get('IS_LOCAL_ENV'):
 else:
     openapi_url = "https://api.openmedcalc.org/openapi.json"
     api_root = "https://api.openmedcalc.org/"
-
 
 api = FastAPI(
     swagger_ui_parameters={"url": openapi_url,
