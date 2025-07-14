@@ -63,3 +63,9 @@ uvicorn main:app --reload
 ## Similar projects
 
 - [Clincal Calculation API](https://github.com/bawmedical/clinical-calculation-api)
+
+## Legal
+
+The tool is intended for use as a research and informational tool only and is not a substitute for professional medical advice, diagnosis, or treatment. ‍The Service is provided "as is" without any warranties of any kind, express or implied, including but not limited to the accuracy, completeness, or reliability of the calculations or results. 
+
+Choice of calculation tasks chosen from "most popular" calculators list from website of MDCalc Ltd (New York, NY). Used with permission. Inclusion of these calculators does not constitute endorsement by MDCalc.
