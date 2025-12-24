@@ -5,101 +5,25 @@ import os
 
 # ============== Imports ==============
 
-from fastapi import FastAPI, Request, APIRouter
-
+from fastapi import FastAPI
 from pathlib import Path
 from typing import Optional
 from pydantic import BaseModel, Field
 import numpy as np
 from variable_descriptions import *
 from model_classes import *
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-import markdown
-
 
 # ============== Functions ==============
 
 def calc_docs(calculator_name: str):
     return Path(f'calculator_docs/short_calculator_info/{calculator_name}.md').read_text()
 
-
-def full_calculator_pages(calculator_name: str):
-    md_text = Path(f'calculator_docs/full_calculator_pages/{calculator_name}.md').read_text()
-    return md_text
-
-
-# ============== Content server ==============
-
-app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
-
-
-@app.get("/", response_class=HTMLResponse)
-async def read_main(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-
-@app.get("/about", response_class=HTMLResponse)
-async def read_about(request: Request):
-    return templates.TemplateResponse("about.html", {"request": request})
-
-
-@app.get("/contact", response_class=HTMLResponse)
-async def read_contact(request: Request):
-    return templates.TemplateResponse("contact.html", {"request": request})
-
-
-# -------------------------------------------- redirects --------------------------------------------
-
-
-async def meld_redirect():
-    return RedirectResponse(url="/meld-na")
-
-
-async def chat_redirect():
-    return RedirectResponse(url="https://chat.openai.com/g/g-mtNkUsX41-openmedcalc")
-
-async def paper_redirect():
-    return RedirectResponse(url="https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1")
-
-
-# router = APIRouter()
-app.add_api_route('/meld', endpoint=meld_redirect)
-app.add_api_route('/chat', endpoint=chat_redirect)
-app.add_api_route('/chatbot', endpoint=chat_redirect)
-app.add_api_route('/bot', endpoint=chat_redirect)
-app.add_api_route('/paper', endpoint=paper_redirect)
-app.add_api_route('/preprint', endpoint=paper_redirect)
-
-
-# ------------------------------------ about calculator pages -------------------------------------
-
-async def read_full_calculator_page(request: Request):
-    # get route
-    route_last = str(request.url).split("/")[-1]
-    content = markdown.markdown(full_calculator_pages(route_last))
-    return templates.TemplateResponse("blank.html", {"request": request, "content": content})
-
-
-# for each file in calculator_docs/full_calculator_pages, add a route
-for file in Path('calculator_docs/full_calculator_pages').glob('*.md'):
-    app.add_route(f'/{file.stem}', read_full_calculator_page)
-
 # ============== API ==============
 
-if os.environ.get('IS_LOCAL_ENV'):
-    openapi_url = "/api/openapi.json"
-    api_root = "http://localhost:7777/api"
-else:
-    openapi_url = "https://api.openmedcalc.org/openapi.json"
-    api_root = "https://api.openmedcalc.org/"
 
-api = FastAPI(
-    swagger_ui_parameters={"url": openapi_url,
-                           "openapi_url": openapi_url},
+api_root = "https://api.openmedcalc.org/"
+
+app = FastAPI(
     title="OpenMedCalc API",
     description="OpenMedCalc API helps you calculate medical scores and indices.",
     summary="The open source medical calculator",
@@ -109,31 +33,20 @@ api = FastAPI(
         "url": "http://openmedcalc.org/contact",
         "email": "info@openmedcalc.org",
     },
-    servers=[{'url': api_root, 'description': 'primary SSL endpoint'}],
-    root_path="/api",
-    root_path_in_servers=False
+    servers=[{'url': api_root, 'description': 'primary endpoint'}]
 )
-app.mount("/api", api)
-
-
-# 404
-@app.api_route("/{path_name:path}", methods=["GET"], response_class=HTMLResponse)
-async def catch_all(request: Request, path_name: str):
-    return templates.TemplateResponse("index.html", {"request": request})
-
 
 # ================= API Routes ==================
 
-
 # ----------------- Welcome -----------------
-@api.get("/", summary="Welcome")
+@app.get("/", summary="Welcome")
 async def welcome():
     return {"message": 'Welcome to the open-med-calc API. Please see the documentation at /docs for more information'}
 
 
 # ------------- Original MELD -----------------
 
-@api.post("/meld", summary="Calculate Original MELD Score", response_model=CalcResponse, description=calc_docs('meld'))
+@app.post("/meld", summary="Calculate Original MELD Score", response_model=CalcResponse, description=calc_docs('meld'))
 async def calculate_meld(calc: CalcRequestMeld):
     additional_info = calc_docs('meld')
     # (0.957 * ln(Serum Cr) + 0.378 * ln(Serum Bilirubin) + 1.120 * ln(INR) + 0.643 ) * 10
@@ -168,7 +81,7 @@ async def calculate_meld(calc: CalcRequestMeld):
 
 # -------------- MELD-Na -----------------
 
-@api.post("/meld-na", summary="Calculate MELD-Na Score", response_model=CalcResponse, description=calc_docs('meld-na'))
+@app.post("/meld-na", summary="Calculate MELD-Na Score", response_model=CalcResponse, description=calc_docs('meld-na'))
 async def calculate_meld_na(calc: CalcRequestMeldNa):
     additional_info = calc_docs('meld-na')
 
@@ -235,7 +148,7 @@ async def calculate_meld_na(calc: CalcRequestMeldNa):
 
 # -------------- Caprini VTE -----------------
 
-@api.post("/caprini-vte", summary="Calculate the Caprini Score for Venous Thromboembolism", response_model=CalcResponse,
+@app.post("/caprini-vte", summary="Calculate the Caprini Score for Venous Thromboembolism", response_model=CalcResponse,
           description=calc_docs('caprini-vte'))
 async def calculate_caprini(calc: CalcRequestCapriniVte):
     additional_info = calc_docs('caprini-vte')
@@ -379,7 +292,7 @@ async def calculate_caprini(calc: CalcRequestCapriniVte):
 
 # -------------- Wells DVT -----------------
 
-@api.post("/wells-dvt", summary="Calculate Wells Criteria for DVT", response_model=CalcResponse,
+@app.post("/wells-dvt", summary="Calculate Wells Criteria for DVT", response_model=CalcResponse,
           description=calc_docs('wells-dvt'))
 async def calculate_wells_dvt(calc: CalcRequestWellsDvt):
     additional_info = calc_docs('wells-dvt')
@@ -423,7 +336,7 @@ async def calculate_wells_dvt(calc: CalcRequestWellsDvt):
 
 
 # -------------- PSI/PORT -----------------
-@api.post("/psi-port", summary="Calculate the PSI/PORT Score Pneumonia Severity Index for CAP",
+@app.post("/psi-port", summary="Calculate the PSI/PORT Score Pneumonia Severity Index for CAP",
           response_model=CalcResponse,
           description=calc_docs('psi-port'))
 async def calculate_psi_port(calc: CalcRequestPsiPort):

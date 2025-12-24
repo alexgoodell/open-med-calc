@@ -12,7 +12,10 @@ It is built using [FastAPI](https://fastapi.tiangolo.com/) and follows the OpenA
 It can be integrated into other applications such as OpenAI's new GPTs functionality.
 **For educational use only. Not for patient care**.
 
-Preprint describing its use integrated into ChatGPT is available on [Medrxiv](https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1).
+Full article describing its use integrated into ChatGPT is available in *npj Digital Medicine*: 
+[**"Large language model agents can use tools to perform clinical calculations"**](https://doi.org/10.1038/s41746-025-01475-8).
+
+(Preprint originally available on [Medrxiv](https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1)).
 
 Interactive live API documenation available here:
 - [Redoc](https://openmedcalc.org/api/redoc)
@@ -20,14 +23,14 @@ Interactive live API documenation available here:
 
 ## To run the app locally
 
-1. Clone the repo
-2. Install requirements
-3. Run the app
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management.
 
-```bash
-cd open-med-calc
-uvicorn main:app --reload
-```
+1. Clone the repo
+2. Install dependencies: `make install` (or `uv sync`)
+3. Run the app: `make run` (or `uv run uvicorn main:app --reload`)
+4. Stop the app: `make stop`
+
+The API will be available at `http://127.0.0.1:8000`.
 
 ## To run the app remotely
 

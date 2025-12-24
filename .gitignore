@@ -169,3 +169,8 @@ cython_debug/
 .idea
 .idea/
 .idea/*
+
+# DevTools
+.vscode/
+CLAUDE.md
+GEMINI.md
