@@ -17,7 +17,7 @@ Full article describing its use integrated into ChatGPT is available in *npj Dig
 
 (Preprint originally available on [Medrxiv](https://www.medrxiv.org/content/10.1101/2023.12.13.23299881v1)).
 
-Interactive live API documenation available here:
+Interactive live API documentation available here:
 - [Redoc](https://openmedcalc.org/api/redoc)
 - [Swagger UI](https://api.openmedcalc.org/docs) 
 
@@ -43,29 +43,43 @@ This application supports deployment to Cloudflare Workers using Python Workers 
 
 ### Deployment Steps
 
-1. Install Cloudflare Wrangler:
+1. Install Pywrangler (Python Workers CLI):
 ```bash
-npm install -g wrangler
+uv tool install workers-py
 ```
 
 2. Authenticate with Cloudflare:
 ```bash
-wrangler login
+npx wrangler login
 ```
 
 3. Deploy to Cloudflare Workers:
 ```bash
-wrangler deploy
+uv run pywrangler deploy
 ```
 
-The application will be deployed to Cloudflare's edge network. Note that Python Workers are in beta and require the `python_workers` compatibility flag (already configured in `wrangler.toml`).
+The application will be deployed to Cloudflare's edge network. Pywrangler will automatically:
+- Read dependencies from `pyproject.toml`
+- Bundle Python packages with your worker
+- Deploy to Cloudflare with the `python_workers` compatibility flag
+
+### Local Development
+
+To test locally before deploying:
+```bash
+uv run pywrangler dev
+```
 
 ### Configuration
 
-The deployment is configured via `wrangler.toml`:
-- **Entry point**: `src/worker.py` - Cloudflare Workers adapter for the FastAPI app
+The deployment is configured via `wrangler.jsonc`:
+- **Entry point**: `worker.py` - Cloudflare Workers adapter for the FastAPI app
 - **Main app**: `main.py` - The core FastAPI application
 - **Compatibility**: Requires `python_workers` flag (beta feature)
+
+Once deployed, the API is available at:
+- `https://api.openmedcalc.org`
+- `https://api.openmedcalc.com`
 
 ### Limitations
 
@@ -73,7 +87,7 @@ The deployment is configured via `wrangler.toml`:
 - Some Python packages may have limited support
 - Check [Cloudflare's Python package compatibility](https://developers.cloudflare.com/workers/languages/python/packages/) for details
 
-## Current forumlas
+## Current formulas
 
 - MELD
 - MELD-Na

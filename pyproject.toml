@@ -3,10 +3,14 @@ name = "open-med-calc"
 version = "0.1.0"
 description = "Open source medical calculator API"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
-    "fastapi>=0.115.0",
-    "numpy>=2.0.0",
-    "pydantic>=2.10.0",
-    "uvicorn>=0.32.0",
+    "webtypy>=0.1.7",
+    "fastapi",
+    "pydantic",
+]
+
+[dependency-groups]
+dev = [
+    "workers-py",
 ]

@@ -178,4 +178,10 @@ GEMINI.md
 # Cloudflare Workers
 .wrangler/
 worker/
+vendor/
+.venv-pyodide/
+.venv-workers/
+python_modules/
 node_modules/
+package-lock.json
+package.json

@@ -6,17 +6,23 @@ import os
 # ============== Imports ==============
 
 from fastapi import FastAPI
-from pathlib import Path
 from typing import Optional
 from pydantic import BaseModel, Field
-import numpy as np
+import math
 from variable_descriptions import *
-from model_classes import *
 
 # ============== Functions ==============
 
 def calc_docs(calculator_name: str):
-    return Path(f'calculator_docs/short_calculator_info/{calculator_name}.md').read_text()
+    """Return documentation for a given calculator."""
+    docs = {
+        'meld': "Calculate the traditional MELD score for an individual. This is the original, pre-2016, model for end-stage liver disease. Note this version has been suppplanted by the MELD-Na score and the meld 3.0 score. See https://openmedcalc.org/meld for references.",
+        'meld-na': "Calculate the MELD-Na (also known as MELD-Sodium) score for an individual. This is the modified model for end-stage liver disease. See https://openmedcalc.org/meld-na for references.",
+        'caprini-vte': "The Caprini Risk Assessment Model is a tool used to assess an individual's risk of Venous Thromboembolism (VTE). See https://openmedcalc.org/caprini-vte for more information.",
+        'wells-dvt': "Wells' Criteria for deep vein thrombosis (DVT) is a tool to estimate the probability of the presence of DVT. For more information, see https://openmedcalc.org/wells-dvt",
+        'psi-port': "The PSI/PORT score: Pneumonia severity index estimates the mortality for adult patients and their risk of acquring pneumonia. See https://openmedcalc.org/psi-port for more information."
+    }
+    return docs.get(calculator_name, f"Calculator: {calculator_name}")
 
 # ============== API ==============
 
@@ -46,15 +52,15 @@ async def welcome():
 
 # ------------- Original MELD -----------------
 
-@app.post("/meld", summary="Calculate Original MELD Score", response_model=CalcResponse, description=calc_docs('meld'))
+@app.post("/meld", summary="Calculate Original MELD Score", response_model=CalcResponse)
 async def calculate_meld(calc: CalcRequestMeld):
     additional_info = calc_docs('meld')
     # (0.957 * ln(Serum Cr) + 0.378 * ln(Serum Bilirubin) + 1.120 * ln(INR) + 0.643 ) * 10
     if calc.is_on_dialysis:
         calc.creatinine = 4.0
-    meld_score = (0.957 * np.log(calc.creatinine) + 0.378 * np.log(
-        calc.bilirubin) + 1.120 * np.log(calc.inr) + 0.643) * 10
-    meld_score = int(np.round(meld_score, 0))
+    meld_score = (0.957 * math.log(calc.creatinine) + 0.378 * math.log(
+        calc.bilirubin) + 1.120 * math.log(calc.inr) + 0.643) * 10
+    meld_score = int(round(meld_score, 0))
     # Estimated 3-Month Mortality By MELD Score
     # ≤9 1.9%
     # 10–19 6.0%
@@ -81,7 +87,7 @@ async def calculate_meld(calc: CalcRequestMeld):
 
 # -------------- MELD-Na -----------------
 
-@app.post("/meld-na", summary="Calculate MELD-Na Score", response_model=CalcResponse, description=calc_docs('meld-na'))
+@app.post("/meld-na", summary="Calculate MELD-Na Score", response_model=CalcResponse)
 async def calculate_meld_na(calc: CalcRequestMeldNa):
     additional_info = calc_docs('meld-na')
 
@@ -111,9 +117,9 @@ async def calculate_meld_na(calc: CalcRequestMeldNa):
 
     # first calculate the MELD(i) = 0.957 × ln(Cr) + 0.378 × ln(bilirubin) + 1.120 × ln(INR) + 0.643
     # Then, round to the tenth decimal place and multiply by 10.
-    # confirmed:  np.log is natural log
-    meld_i = 0.957 * np.log(calc.creatinine) + 0.378 * np.log(calc.bilirubin) + 1.12 * np.log(calc.inr) + 0.643
-    meld_i = np.round(meld_i, 2) * 10.0
+    # confirmed:  math.log is natural log
+    meld_i = 0.957 * math.log(calc.creatinine) + 0.378 * math.log(calc.bilirubin) + 1.12 * math.log(calc.inr) + 0.643
+    meld_i = round(meld_i, 2) * 10.0
 
     # If MELD(i) > 11, perform additional MELD calculation as follows:
     # MELD = MELD(i) + 1.32 × (137 – Na) –  [ 0.033 × MELD(i) × (137 – Na) ]
@@ -127,7 +133,7 @@ async def calculate_meld_na(calc: CalcRequestMeldNa):
         meld_na = 40
 
     # round to nearest integer
-    meld_na = np.round(meld_na, 0)
+    meld_na = round(meld_na, 0)
 
     three_month_mortality = 0
     if meld_na <= 9:
@@ -148,8 +154,7 @@ async def calculate_meld_na(calc: CalcRequestMeldNa):
 
 # -------------- Caprini VTE -----------------
 
-@app.post("/caprini-vte", summary="Calculate the Caprini Score for Venous Thromboembolism", response_model=CalcResponse,
-          description=calc_docs('caprini-vte'))
+@app.post("/caprini-vte", summary="Calculate the Caprini Score for Venous Thromboembolism", response_model=CalcResponse)
 async def calculate_caprini(calc: CalcRequestCapriniVte):
     additional_info = calc_docs('caprini-vte')
 
@@ -292,8 +297,7 @@ async def calculate_caprini(calc: CalcRequestCapriniVte):
 
 # -------------- Wells DVT -----------------
 
-@app.post("/wells-dvt", summary="Calculate Wells Criteria for DVT", response_model=CalcResponse,
-          description=calc_docs('wells-dvt'))
+@app.post("/wells-dvt", summary="Calculate Wells Criteria for DVT", response_model=CalcResponse)
 async def calculate_wells_dvt(calc: CalcRequestWellsDvt):
     additional_info = calc_docs('wells-dvt')
 
@@ -337,8 +341,7 @@ async def calculate_wells_dvt(calc: CalcRequestWellsDvt):
 
 # -------------- PSI/PORT -----------------
 @app.post("/psi-port", summary="Calculate the PSI/PORT Score Pneumonia Severity Index for CAP",
-          response_model=CalcResponse,
-          description=calc_docs('psi-port'))
+          response_model=CalcResponse)
 async def calculate_psi_port(calc: CalcRequestPsiPort):
     additional_info = calc_docs('psi-port')
 

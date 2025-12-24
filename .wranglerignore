@@ -1,0 +1,56 @@
+# Virtual environments
+.venv/
+.venv.backup/
+venv/
+env/
+ENV/
+
+# Development files
+.git/
+.github/
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Documentation and private files
+private/
+logs/
+*.md
+CLAUDE.md
+GEMINI.md
+LICENSE.txt
+
+# Node modules
+node_modules/
+node_modules
+
+# Build artifacts
+.wrangler/
+worker/
+dist/
+build/
+.venv-pyodide/
+
+# IDE
+.DS_Store
+
+# Unnecessary for deployment
+calculator_docs/full_calculator_pages/
+Makefile
+requirements.txt.old
+docker-compose.yml
+.python-version
+.env
+uv.lock
+
+# Keep only what's needed:
+# - worker.py (entry point)
+# - main.py (FastAPI app)
+# - variable_descriptions.py (models)
+# - model_classes.py (models)
+# - calculator_docs/short_calculator_info/ (documentation)
+# - assistant_functions.json (optional)
