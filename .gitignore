@@ -174,3 +174,8 @@ cython_debug/
 .vscode/
 CLAUDE.md
 GEMINI.md
+
+# Cloudflare Workers
+.wrangler/
+worker/
+node_modules/

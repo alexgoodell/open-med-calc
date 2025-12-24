@@ -32,22 +32,46 @@ This project uses [uv](https://docs.astral.sh/uv/) for dependency management.
 
 The API will be available at `http://127.0.0.1:8000`.
 
-## To run the app remotely
+## Deploy to Cloudflare Workers
 
-1. Install docker and docker-compose on remote server
-2. Transfer docker-compose.yml to remote server
-3. make the volume is created prior to running the docker container
-```bash
-docker volume create app
-mkdir -r /var/lib/docker/volumes/app/_data
-```
-4. run `docker-compose up -d` in the same directory as docker-compose.yml
-5. Run the app
+This application supports deployment to Cloudflare Workers using Python Workers (currently in beta).
 
+### Prerequisites
+- [Node.js](https://nodejs.org/) and npm installed
+- [uv](https://docs.astral.sh/uv/) installed
+- Cloudflare account
+
+### Deployment Steps
+
+1. Install Cloudflare Wrangler:
 ```bash
-cd open-med-calc
-uvicorn main:app --reload
+npm install -g wrangler
 ```
+
+2. Authenticate with Cloudflare:
+```bash
+wrangler login
+```
+
+3. Deploy to Cloudflare Workers:
+```bash
+wrangler deploy
+```
+
+The application will be deployed to Cloudflare's edge network. Note that Python Workers are in beta and require the `python_workers` compatibility flag (already configured in `wrangler.toml`).
+
+### Configuration
+
+The deployment is configured via `wrangler.toml`:
+- **Entry point**: `src/worker.py` - Cloudflare Workers adapter for the FastAPI app
+- **Main app**: `main.py` - The core FastAPI application
+- **Compatibility**: Requires `python_workers` flag (beta feature)
+
+### Limitations
+
+- First request may experience cold start (1-10 seconds)
+- Some Python packages may have limited support
+- Check [Cloudflare's Python package compatibility](https://developers.cloudflare.com/workers/languages/python/packages/) for details
 
 ## Current forumlas
 
