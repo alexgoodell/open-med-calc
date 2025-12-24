@@ -5,8 +5,8 @@ description = "Open source medical calculator API"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "fastapi>=0.104.1",
-    "numpy>=1.26.2",
-    "pydantic>=2.4.2",
-    "uvicorn[standard]>=0.24.0",
+    "fastapi>=0.115.0",
+    "numpy>=2.0.0",
+    "pydantic>=2.10.0",
+    "uvicorn>=0.32.0",
 ]

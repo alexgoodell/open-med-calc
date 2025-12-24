@@ -174,4 +174,3 @@ cython_debug/
 .vscode/
 CLAUDE.md
 GEMINI.md
-.python-version
